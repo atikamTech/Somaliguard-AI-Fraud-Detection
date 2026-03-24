@@ -1,0 +1,4 @@
+# Tell GitHub to prioritize Python/AI for the language bar
+somaliguard-frontend/** linguist-vendored
+somaliguard-backend/** linguist-vendored
+node_modules/** linguist-vendored
