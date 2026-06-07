@@ -525,7 +525,7 @@ export default function SomaliGuardDashboard() {
     ].slice(-120)); // keep last 120 entries
   };
 
-  const FRAUD_CHECK_URL = "http://localhost:8000/predict";
+  const FRAUD_CHECK_URL = process.env.NEXT_PUBLIC_ML_ENGINE_URL || "http://localhost:8000/predict";
 
   const playSynthTone = (frequency: number, durationMs: number) => {
     if (typeof window === "undefined") return;
@@ -617,7 +617,7 @@ export default function SomaliGuardDashboard() {
   useEffect(() => {
     async function fetchTransactions() {
       try {
-        const res = await fetch("http://localhost:3001/transactions");
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001"}/transactions`);
         const data: TransactionApiItem[] = await res.json();
         setTransactions(data.map(mapApiToTransaction));
       } catch {

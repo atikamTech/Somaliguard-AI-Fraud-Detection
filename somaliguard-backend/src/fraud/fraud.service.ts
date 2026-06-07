@@ -22,7 +22,7 @@ export interface FraudCheckResult {
   behavioral_features?: any;
 }
 
-const PYTHON_PREDICT_URL = 'http://127.0.0.1:8000/predict';
+const PYTHON_PREDICT_URL = process.env.ML_ENGINE_URL || 'http://127.0.0.1:8000/predict';
 
 @Injectable()
 export class FraudService {
