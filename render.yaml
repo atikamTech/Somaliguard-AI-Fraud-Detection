@@ -3,8 +3,9 @@ services:
   - type: web
     name: somaliguard-ml-engine
     env: python
-    buildCommand: pip install -r ml_engine/requirements.txt
-    startCommand: python -m uvicorn ml_engine.app:app --host 0.0.0.0 --port $PORT
+    rootDir: ml_engine
+    buildCommand: pip install -r requirements.txt
+    startCommand: python -m uvicorn app:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: PYTHON_VERSION
         value: 3.10.0
@@ -13,7 +14,7 @@ services:
   - type: web
     name: somaliguard-backend
     env: node
-    rootDir: somaliguard-backend
+    rootDir: somaliaguard-backend
     buildCommand: npm install && npm run build
     startCommand: npm run start:prod
     envVars:
@@ -24,9 +25,10 @@ services:
           property: host
 
   # 3. Frontend (Next.js Static Site)
-  - type: static
+  - type: web
     name: somaliguard-frontend
-    rootDir: somaliguard-frontend
+    env: static
+    rootDir: somaliaguard-frontend
     buildCommand: npm install && npm run build
     publishPath: out
     envVars:
