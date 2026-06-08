@@ -14,7 +14,7 @@ services:
   - type: web
     name: somaliguard-backend
     env: node
-    rootDir: somaliaguard-backend
+    rootDir: somaliguard-backend
     buildCommand: npm install && npm run build
     startCommand: npm run start:prod
     envVars:
@@ -25,12 +25,11 @@ services:
           property: host
 
   # 3. Frontend (Next.js Static Site)
-  - type: web
+  - type: static
     name: somaliguard-frontend
-    env: static
-    rootDir: somaliaguard-frontend
+    rootDir: somaliguard-frontend
     buildCommand: npm install && npm run build
-    staticPublishPath: out
+    publishPath: out
     envVars:
       - key: NEXT_PUBLIC_BACKEND_URL
         fromService:

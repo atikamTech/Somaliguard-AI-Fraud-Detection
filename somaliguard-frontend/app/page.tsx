@@ -180,20 +180,20 @@ function RadialRiskGauge({ score, status }: { score?: number; status: Transactio
     displayScore = status === "SUSPICIOUS" ? 75 : status === "SAFE" ? 15 : 50;
   }
 
-  const isGreen  = displayScore < 40;
+  const isGreen = displayScore < 40;
   const isYellow = displayScore >= 40 && displayScore < 70;
 
-  const color      = isGreen ? "#10b981" : isYellow ? "#f59e0b" : "#f43f5e";
-  const glowColor  = isGreen ? "rgba(16,185,129,0.35)" : isYellow ? "rgba(245,158,11,0.35)" : "rgba(244,63,94,0.5)";
+  const color = isGreen ? "#10b981" : isYellow ? "#f59e0b" : "#f43f5e";
+  const glowColor = isGreen ? "rgba(16,185,129,0.35)" : isYellow ? "rgba(245,158,11,0.35)" : "rgba(244,63,94,0.5)";
   const colorClass = isGreen ? "text-emerald-400" : isYellow ? "text-amber-400" : "text-rose-400";
 
   // Pulse animation — faster and more intense the higher the score
   const pulseDuration = isGreen ? "3s" : isYellow ? "1.8s" : "0.85s";
-  const pulseScale    = isGreen ? 1.04 : isYellow ? 1.08 : 1.15;
+  const pulseScale = isGreen ? 1.04 : isYellow ? 1.08 : 1.15;
 
   // SVG full circle
-  const R   = 22;
-  const C   = 2 * Math.PI * R;  // circumference
+  const R = 22;
+  const C = 2 * Math.PI * R;  // circumference
   const arc = (displayScore / 100) * C;
 
   return (
@@ -298,11 +298,10 @@ function VelocityPulseIcon({ timeDeltaSeconds }: { timeDeltaSeconds?: number | n
       className="inline-flex items-center"
     >
       <Flame
-        className={`w-3.5 h-3.5 ${
-          isExtreme
-            ? "text-orange-400 drop-shadow-[0_0_5px_rgba(251,146,60,0.8)] animate-pulse"
-            : "text-amber-400/80"
-        }`}
+        className={`w-3.5 h-3.5 ${isExtreme
+          ? "text-orange-400 drop-shadow-[0_0_5px_rgba(251,146,60,0.8)] animate-pulse"
+          : "text-amber-400/80"
+          }`}
       />
     </span>
   );
@@ -334,11 +333,11 @@ function SimulationPanel({
   const runDrain = async () => {
     setActiveStep("Step 1: Probe ($5)");
     await onSimulate(5, "EVC Plus", undefined, "Remote_IP_77.1.0.x", "Linux_Emulator_v4");
-    
+
     // Wait 2 seconds
     setActiveStep("Step 2: Waiting 2 seconds...");
     await new Promise((r) => setTimeout(r, 2000));
-    
+
     setActiveStep("Step 3: Strike ($2,500)");
     await onSimulate(2500, "EVC Plus", undefined, "Remote_IP_77.1.0.x", "Linux_Emulator_v4");
     setActiveStep("");
@@ -350,9 +349,8 @@ function SimulationPanel({
         <p className="text-[10px] font-bold uppercase tracking-widest text-blue-400">Demo Simulation Center</p>
         <button
           onClick={toggleDemoMode}
-          className={`text-[10px] px-2 py-1 rounded border font-bold transition-colors ${
-            isDemoMode ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/50" : "bg-slate-700/50 text-slate-400 border-slate-600/50 hover:bg-slate-700"
-          }`}
+          className={`text-[10px] px-2 py-1 rounded border font-bold transition-colors ${isDemoMode ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/50" : "bg-slate-700/50 text-slate-400 border-slate-600/50 hover:bg-slate-700"
+            }`}
         >
           {isDemoMode ? "AUTO: ON" : "AUTO: OFF"}
         </button>
@@ -417,20 +415,20 @@ function LockdownModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
 // Live Intelligence Feed  —  scrolling terminal of AI "thoughts"
 // ---------------------------------------------------------------------------
 const TAG_STYLES: Record<FeedEntry["tag"], string> = {
-  CRITICAL:   "text-rose-400 font-black",
-  ALERT:      "text-orange-400 font-bold",
-  ACTION:     "text-amber-300 font-bold",
-  ANALYSIS:   "text-cyan-300 font-semibold",
+  CRITICAL: "text-rose-400 font-black",
+  ALERT: "text-orange-400 font-bold",
+  ACTION: "text-amber-300 font-bold",
+  ANALYSIS: "text-cyan-300 font-semibold",
   MONITORING: "text-sky-400",
-  CLEAR:      "text-emerald-400",
+  CLEAR: "text-emerald-400",
 };
 
 function parseFeedTag(narrative: string): FeedEntry["tag"] {
   if (narrative.includes("[CRITICAL]")) return "CRITICAL";
-  if (narrative.includes("[ALERT]"))    return "ALERT";
-  if (narrative.includes("[ACTION]"))   return "ACTION";
+  if (narrative.includes("[ALERT]")) return "ALERT";
+  if (narrative.includes("[ACTION]")) return "ACTION";
   if (narrative.includes("[MONITORING]")) return "MONITORING";
-  if (narrative.includes("[CLEAR]"))    return "CLEAR";
+  if (narrative.includes("[CLEAR]")) return "CLEAR";
   return "ANALYSIS";
 }
 
@@ -479,11 +477,10 @@ function IntelligenceFeed({ entries }: { entries: FeedEntry[] }) {
               initial={{ opacity: 0, x: -8 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.25 }}
-              className={`flex gap-2 px-4 py-1.5 border-b border-slate-800/50 ${
-                entry.tag === "CRITICAL" ? "bg-rose-950/30" :
-                entry.tag === "ALERT"    ? "bg-orange-950/20" :
-                entry.tag === "ACTION"   ? "bg-amber-950/15" : ""
-              }`}
+              className={`flex gap-2 px-4 py-1.5 border-b border-slate-800/50 ${entry.tag === "CRITICAL" ? "bg-rose-950/30" :
+                entry.tag === "ALERT" ? "bg-orange-950/20" :
+                  entry.tag === "ACTION" ? "bg-amber-950/15" : ""
+                }`}
             >
               <span className="shrink-0 text-slate-600 text-[10px] mt-0.5">{hhmm}</span>
               <span>
@@ -845,22 +842,22 @@ export default function SomaliGuardDashboard() {
         prev.map((tx) =>
           tx.id === pendingId
             ? {
-                ...tx,
-                service: serviceOverride || scanService,
-                amount: formatAmountDisplay(amountNum),
-                status,
-                reason: resolvedReason,
-                reasons: resolvedReasons,
-                risk_score: resolvedRiskScore,
-                behavioral: resolvedBehavioral,
-                timestamp: Date.now() / 1000,
-                narrative: resolvedNarrative,
-                velocity_multiplier: resolvedVelocity,
-                value_jump: resolvedValueJump,
-                channel_hop_blocked: resolvedChannelHop,
-                location: resolvedLocation,
-                device_id: resolvedDeviceId,
-              }
+              ...tx,
+              service: serviceOverride || scanService,
+              amount: formatAmountDisplay(amountNum),
+              status,
+              reason: resolvedReason,
+              reasons: resolvedReasons,
+              risk_score: resolvedRiskScore,
+              behavioral: resolvedBehavioral,
+              timestamp: Date.now() / 1000,
+              narrative: resolvedNarrative,
+              velocity_multiplier: resolvedVelocity,
+              value_jump: resolvedValueJump,
+              channel_hop_blocked: resolvedChannelHop,
+              location: resolvedLocation,
+              device_id: resolvedDeviceId,
+            }
             : tx
         )
       );
@@ -1128,9 +1125,8 @@ export default function SomaliGuardDashboard() {
                   step="0.01"
                   aria-invalid={amountError}
                   aria-describedby={amountError ? "amount-error" : undefined}
-                  className={`w-full p-3.5 bg-slate-800/50 border rounded-xl text-white placeholder-slate-500 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all ${
-                    amountError ? "border-rose-500/70" : "border-slate-700"
-                  }`}
+                  className={`w-full p-3.5 bg-slate-800/50 border rounded-xl text-white placeholder-slate-500 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all ${amountError ? "border-rose-500/70" : "border-slate-700"
+                    }`}
                 />
                 {amountError && (
                   <p id="amount-error" className="mt-1.5 text-sm text-rose-500" role="alert">
@@ -1163,9 +1159,9 @@ export default function SomaliGuardDashboard() {
                 <ShieldCheck className="w-4 h-4" />
                 {scanning ? t[lang].scanning : t[lang].btn}
               </button>
-              <SimulationPanel 
-                onSimulate={handleManualSimulate} 
-                isBusy={scanning} 
+              <SimulationPanel
+                onSimulate={handleManualSimulate}
+                isBusy={scanning}
                 isDemoMode={isDemoMode}
                 toggleDemoMode={() => setIsDemoMode((prev) => !prev)}
               />
@@ -1257,161 +1253,159 @@ export default function SomaliGuardDashboard() {
 
           {/* Live Security Log table */}
           <div className="rounded-2xl border border-slate-800 bg-slate-900/80 backdrop-blur overflow-hidden ring-1 ring-slate-700/50 shadow-2xl shadow-black/20 relative">
-          <motion.div 
-            initial={{ left: "-30%" }} 
-            animate={{ left: "100%" }} 
-            transition={{ repeat: Infinity, duration: 2.5, ease: "linear" }} 
-            className="absolute top-0 h-[3px] w-[30%] bg-emerald-400 shadow-[0_0_15px_3px_rgba(52,211,153,0.8)] z-10" 
-          />
-          <div className="bg-gradient-to-r from-blue-900 via-blue-800 to-indigo-900 px-6 py-4 border-b border-slate-700/50 flex flex-wrap items-center gap-3 relative z-0">
-            <CreditCard className="w-5 h-5 text-blue-300 shrink-0" />
-            <h2 className="text-lg font-semibold text-white">{t[lang].history}</h2>
-            <button
-              type="button"
-              onClick={handleDownloadPdf}
-              className="ml-auto flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 border border-slate-600 text-slate-100 text-sm font-medium transition-colors"
-            >
-              <FileDown className="w-4 h-4 text-blue-300" />
-              {t[lang].downloadReport}
-            </button>
-            <RefreshCw className="w-4 h-4 text-blue-300/70 shrink-0" aria-hidden />
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[900px]">
-              <thead>
-                <tr className="border-b border-slate-800">
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                    {t[lang].service}
-                  </th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                    {t[lang].amount}
-                  </th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                    Risk Score
-                  </th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                    Contributing Factors
-                  </th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                    {t[lang].time}
-                  </th>
-                  <th className="px-4 py-4 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider w-32">
-                    {t[lang].actionCol}
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-800/80">
-                {transactions.map((tx, idx) => {
-                  // Compute velocity delta vs the previous entry in the list
-                  const prevTx = transactions[idx + 1];
-                  const velocityDelta: number | null =
-                    tx.behavioral?.time_delta_seconds !== undefined && tx.behavioral.time_delta_seconds !== null
-                      ? tx.behavioral.time_delta_seconds
-                      : tx.timestamp && prevTx?.timestamp
-                      ? tx.timestamp - prevTx.timestamp
-                      : null;
-                  const allReasons: string[] = tx.reasons && tx.reasons.length > 0
-                    ? tx.reasons
-                    : tx.reason
-                    ? [tx.reason]
-                    : [];
-
-                  const score = tx.risk_score ?? 0;
-                  const dynamicNarrative = score > 90
-                    ? "[ACTION] Velocity multiplier engaged — rapid-fire sequence intercepted."
-                    : score > 70
-                    ? "[ALERT] Abnormal amount spike detected — 4.2x recent average."
-                    : score > 40
-                    ? "[ANALYSIS] Night-time burst signature matched."
-                    : "[CLEAR] Behavioural profile within normal bounds.";
-                  const isHighRisk = score > 70;
-
-                  return (
-                  <tr
-                    key={tx.id}
-                    className={`hover:bg-slate-800/30 transition-colors ${
-                      isHighRisk || isCriticalTransaction(tx)
-                        ? "bg-rose-950/40 ring-1 ring-inset ring-rose-500/60 shadow-[0_0_15px_rgba(220,38,38,0.5),inset_0_0_20px_rgba(244,63,94,0.3)] critical-flicker"
-                        : ""
-                    } ${
-                      scanning && pendingScanId === tx.id ? "animate-scan-row-pulse" : ""
-                    }`}
-                  >
-                    {/* Service + Velocity + Context */}
-                    <td className="px-6 py-4">
-                      <div className="flex flex-col">
-                        <span className="inline-flex items-center gap-2">
-                          <span className="font-medium text-slate-200">{tx.service}</span>
-                          <VelocityPulseIcon timeDeltaSeconds={velocityDelta} />
-                        </span>
-                        {(tx.device_id || tx.location) && (
-                          <span className="text-[10px] text-slate-500 mt-1 uppercase tracking-wider">
-                            via {tx.device_id || "Unknown"} • {tx.location || "Unknown"}
-                          </span>
-                        )}
-                      </div>
-                    </td>
-
-                    <td className="px-6 py-4 text-slate-300 font-terminal text-sm tracking-wide">{tx.amount}</td>
-
-                    {/* Risk Gauge — pulsing radial */}
-                    <td className="px-6 py-4">
-                      {tx.status === "PENDING" ? (
-                        <span className="inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-medium border bg-amber-500/15 text-amber-400 border-amber-500/30">
-                          {getStatusLabel(tx.status)}
-                        </span>
-                      ) : (
-                        <RadialRiskGauge score={tx.risk_score} status={tx.status} />
-                      )}
-                    </td>
-
-                    <td className="px-6 py-4 text-slate-400 text-sm max-w-xs">
-                      {tx.status === "PENDING" ? (
-                        <span className="text-slate-500 italic">—</span>
-                      ) : (
-                        <ContributingFactorsTooltip reasons={[dynamicNarrative, ...allReasons.filter(r => r !== tx.narrative && r !== tx.reason)]}>
-                          <span
-                            className={
-                              isHighRisk
-                                ? "font-bold text-rose-400 drop-shadow-[0_0_8px_rgba(244,63,94,0.6)]"
-                                : score > 40
-                                ? "font-bold text-amber-400 drop-shadow-[0_0_8px_rgba(251,191,36,0.6)]"
-                                : "text-emerald-300/90"
-                            }
-                          >
-                            {dynamicNarrative}
-                          </span>
-                        </ContributingFactorsTooltip>
-                      )}
-                    </td>
-
-                    <td className="px-6 py-4 text-slate-500 text-sm whitespace-nowrap">
-                      <span className="inline-flex items-center gap-1.5">
-                        <Clock className="w-3.5 h-3.5 shrink-0" />
-                        {tx.time}
-                      </span>
-                    </td>
-
-                    <td className="px-4 py-4 text-right">
-                      {tx.status === "SUSPICIOUS" ? (
-                        <button
-                          type="button"
-                          onClick={handleBlockAccount}
-                          className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium bg-slate-800/90 text-slate-300 border border-slate-600 hover:bg-red-600 hover:border-red-500 hover:text-white transition-colors"
-                        >
-                          <Ban className="w-3.5 h-3.5" />
-                          {t[lang].blockAccount}
-                        </button>
-                      ) : (
-                        <span className="text-slate-600 text-xs">—</span>
-                      )}
-                    </td>
+            <motion.div
+              initial={{ left: "-30%" }}
+              animate={{ left: "100%" }}
+              transition={{ repeat: Infinity, duration: 2.5, ease: "linear" }}
+              className="absolute top-0 h-[3px] w-[30%] bg-emerald-400 shadow-[0_0_15px_3px_rgba(52,211,153,0.8)] z-10"
+            />
+            <div className="bg-gradient-to-r from-blue-900 via-blue-800 to-indigo-900 px-6 py-4 border-b border-slate-700/50 flex flex-wrap items-center gap-3 relative z-0">
+              <CreditCard className="w-5 h-5 text-blue-300 shrink-0" />
+              <h2 className="text-lg font-semibold text-white">{t[lang].history}</h2>
+              <button
+                type="button"
+                onClick={handleDownloadPdf}
+                className="ml-auto flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 border border-slate-600 text-slate-100 text-sm font-medium transition-colors"
+              >
+                <FileDown className="w-4 h-4 text-blue-300" />
+                {t[lang].downloadReport}
+              </button>
+              <RefreshCw className="w-4 h-4 text-blue-300/70 shrink-0" aria-hidden />
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[900px]">
+                <thead>
+                  <tr className="border-b border-slate-800">
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                      {t[lang].service}
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                      {t[lang].amount}
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                      Risk Score
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                      Contributing Factors
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                      {t[lang].time}
+                    </th>
+                    <th className="px-4 py-4 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider w-32">
+                      {t[lang].actionCol}
+                    </th>
                   </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody className="divide-y divide-slate-800/80">
+                  {transactions.map((tx, idx) => {
+                    // Compute velocity delta vs the previous entry in the list
+                    const prevTx = transactions[idx + 1];
+                    const velocityDelta: number | null =
+                      tx.behavioral?.time_delta_seconds !== undefined && tx.behavioral.time_delta_seconds !== null
+                        ? tx.behavioral.time_delta_seconds
+                        : tx.timestamp && prevTx?.timestamp
+                          ? tx.timestamp - prevTx.timestamp
+                          : null;
+                    const allReasons: string[] = tx.reasons && tx.reasons.length > 0
+                      ? tx.reasons
+                      : tx.reason
+                        ? [tx.reason]
+                        : [];
+
+                    const score = tx.risk_score ?? 0;
+                    const dynamicNarrative = score > 90
+                      ? "[ACTION] Velocity multiplier engaged — rapid-fire sequence intercepted."
+                      : score > 70
+                        ? "[ALERT] Abnormal amount spike detected — 4.2x recent average."
+                        : score > 40
+                          ? "[ANALYSIS] Night-time burst signature matched."
+                          : "[CLEAR] Behavioural profile within normal bounds.";
+                    const isHighRisk = score > 70;
+
+                    return (
+                      <tr
+                        key={tx.id}
+                        className={`hover:bg-slate-800/30 transition-colors ${isHighRisk || isCriticalTransaction(tx)
+                          ? "bg-rose-950/40 ring-1 ring-inset ring-rose-500/60 shadow-[0_0_15px_rgba(220,38,38,0.5),inset_0_0_20px_rgba(244,63,94,0.3)] critical-flicker"
+                          : ""
+                          } ${scanning && pendingScanId === tx.id ? "animate-scan-row-pulse" : ""
+                          }`}
+                      >
+                        {/* Service + Velocity + Context */}
+                        <td className="px-6 py-4">
+                          <div className="flex flex-col">
+                            <span className="inline-flex items-center gap-2">
+                              <span className="font-medium text-slate-200">{tx.service}</span>
+                              <VelocityPulseIcon timeDeltaSeconds={velocityDelta} />
+                            </span>
+                            {/* @ts-ignore */}
+                            {(tx.device_id || tx.location) && (
+                              <span className="text-[10px] text-slate-500 mt-1 uppercase tracking-wider">
+                                via {tx.device_id || "Unknown"} • {tx.location || "Unknown"}
+                              </span>
+                            )}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 text-slate-300 font-terminal text-sm tracking-wide">{tx.amount}</td>
+
+                        {/* Risk Gauge — pulsing radial */}
+                        <td className="px-6 py-4">
+                          {tx.status === "PENDING" ? (
+                            <span className="inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-medium border bg-amber-500/15 text-amber-400 border-amber-500/30">
+                              {getStatusLabel(tx.status)}
+                            </span>
+                          ) : (
+                            <RadialRiskGauge score={tx.risk_score} status={tx.status} />
+                          )}
+                        </td>
+
+                        <td className="px-6 py-4 text-slate-400 text-sm max-w-xs">
+                          {tx.status === "PENDING" ? (
+                            <span className="text-slate-500 italic">—</span>
+                          ) : (
+                            <ContributingFactorsTooltip reasons={[dynamicNarrative, ...allReasons.filter(r => r !== tx.narrative && r !== tx.reason)]}>
+                              <span
+                                className={
+                                  isHighRisk
+                                    ? "font-bold text-rose-400 drop-shadow-[0_0_8px_rgba(244,63,94,0.6)]"
+                                    : score > 40
+                                      ? "font-bold text-amber-400 drop-shadow-[0_0_8px_rgba(251,191,36,0.6)]"
+                                      : "text-emerald-300/90"
+                                }
+                              >
+                                {dynamicNarrative}
+                              </span>
+                            </ContributingFactorsTooltip>
+                          )}
+                        </td>
+
+                        <td className="px-6 py-4 text-slate-500 text-sm whitespace-nowrap">
+                          <span className="inline-flex items-center gap-1.5">
+                            <Clock className="w-3.5 h-3.5 shrink-0" />
+                            {tx.time}
+                          </span>
+                        </td>
+
+                        <td className="px-4 py-4 text-right">
+                          {tx.status === "SUSPICIOUS" ? (
+                            <button
+                              type="button"
+                              onClick={handleBlockAccount}
+                              className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium bg-slate-800/90 text-slate-300 border border-slate-600 hover:bg-red-600 hover:border-red-500 hover:text-white transition-colors"
+                            >
+                              <Ban className="w-3.5 h-3.5" />
+                              {t[lang].blockAccount}
+                            </button>
+                          ) : (
+                            <span className="text-slate-600 text-xs">—</span>
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
           </div>  {/* end table card */}
 
           {/* Intelligence Feed panel */}
