@@ -1,0 +1,42 @@
+services:
+  # 1. ML Engine (Python FastAPI)
+  - type: web
+    name: somaliguard-ml-engine
+    env: python
+    buildCommand: pip install -r ml_engine/requirements.txt
+    startCommand: python -m uvicorn ml_engine.app:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.0
+
+  # 2. Backend (NestJS)
+  - type: web
+    name: somaliguard-backend
+    env: node
+    rootDir: somaliguard-backend
+    buildCommand: npm install && npm run build
+    startCommand: npm run start:prod
+    envVars:
+      - key: ML_ENGINE_URL
+        fromService:
+          type: web
+          name: somaliguard-ml-engine
+          property: host
+
+  # 3. Frontend (Next.js Static Site)
+  - type: static
+    name: somaliguard-frontend
+    rootDir: somaliguard-frontend
+    buildCommand: npm install && npm run build
+    publishPath: out
+    envVars:
+      - key: NEXT_PUBLIC_BACKEND_URL
+        fromService:
+          type: web
+          name: somaliguard-backend
+          property: host
+      - key: NEXT_PUBLIC_ML_ENGINE_URL
+        fromService:
+          type: web
+          name: somaliguard-ml-engine
+          property: host
