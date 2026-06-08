@@ -1339,7 +1339,7 @@ export default function SomaliGuardDashboard() {
                               <VelocityPulseIcon timeDeltaSeconds={velocityDelta} />
                             </span>
                             {/* @ts-ignore */}
-                            {(tx.device_id || tx.location) && (
+                            {((tx as any).device_id || tx.location) && (
                               <span className="text-[10px] text-slate-500 mt-1 uppercase tracking-wider">
                                 via {tx.device_id || "Unknown"} • {tx.location || "Unknown"}
                               </span>
