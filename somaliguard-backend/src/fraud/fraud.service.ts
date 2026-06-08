@@ -26,7 +26,7 @@ const PYTHON_PREDICT_URL = process.env.ML_ENGINE_URL || 'http://127.0.0.1:8000/p
 
 @Injectable()
 export class FraudService {
-  constructor() {}
+  constructor() { }
 
   private getClientKey(req: Request): string {
     const forwarded = req.headers['x-forwarded-for'];
@@ -72,7 +72,7 @@ export class FraudService {
 
       // Mapping rules: ML engine is now the SOURCE OF TRUTH
       const prediction = data.prediction === 'SAFE' ? 'SAFE' : 'SUSPICIOUS';
-      
+
       return {
         prediction,
         risk_score: data.risk_score, // Expecting 0-100 from Python
@@ -100,4 +100,4 @@ export class FraudService {
     }
   }
 }
-}
+
