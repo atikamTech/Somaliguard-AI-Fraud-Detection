@@ -30,7 +30,7 @@ services:
     env: static
     rootDir: somaliaguard-frontend
     buildCommand: npm install && npm run build
-    publishPath: out
+    staticPublishPath: out
     envVars:
       - key: NEXT_PUBLIC_BACKEND_URL
         fromService:
