@@ -67,6 +67,10 @@ interface Transaction {
   value_jump?: number | null;
   /** Whether a channel-hop block was triggered */
   channel_hop_blocked?: boolean;
+  /** Location of the transaction */
+  location?: string;
+  /** Device ID of the transaction */
+  device_id?: string;
 }
 
 // API response item: backend may send status or risk_score
@@ -89,6 +93,8 @@ interface TransactionApiItem {
   velocity_multiplier?: number;
   value_jump?: number | null;
   channel_hop_blocked?: boolean;
+  location?: string;
+  device_id?: string;
 }
 
 interface FeedEntry {
@@ -127,6 +133,8 @@ function mapApiToTransaction(item: TransactionApiItem): Transaction {
     velocity_multiplier: item.velocity_multiplier,
     value_jump: item.value_jump,
     channel_hop_blocked: item.channel_hop_blocked,
+    location: item.location,
+    device_id: item.device_id,
   };
 }
 
@@ -1338,8 +1346,7 @@ export default function SomaliGuardDashboard() {
                               <span className="font-medium text-slate-200">{tx.service}</span>
                               <VelocityPulseIcon timeDeltaSeconds={velocityDelta} />
                             </span>
-                            {/* @ts-ignore */}
-                            {((tx as any).device_id || tx.location) && (
+                            {(tx.device_id || tx.location) && (
                               <span className="text-[10px] text-slate-500 mt-1 uppercase tracking-wider">
                                 via {tx.device_id || "Unknown"} • {tx.location || "Unknown"}
                               </span>
