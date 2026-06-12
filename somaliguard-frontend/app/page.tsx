@@ -530,7 +530,10 @@ export default function SomaliGuardDashboard() {
     ].slice(-120)); // keep last 120 entries
   };
 
-  const FRAUD_CHECK_URL = process.env.NEXT_PUBLIC_ML_ENGINE_URL || "http://localhost:8000/predict";
+  const ML_ENGINE_BASE_URL = process.env.NEXT_PUBLIC_ML_ENGINE_URL || "http://localhost:8000";
+  const FRAUD_CHECK_URL = ML_ENGINE_BASE_URL.endsWith("/predict") 
+    ? ML_ENGINE_BASE_URL 
+    : `${ML_ENGINE_BASE_URL.replace(/\/$/, "")}/predict`;
 
   const playSynthTone = (frequency: number, durationMs: number) => {
     if (typeof window === "undefined") return;
