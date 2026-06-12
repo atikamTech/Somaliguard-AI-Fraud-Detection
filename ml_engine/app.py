@@ -15,7 +15,10 @@ from pydantic import BaseModel, Field, model_validator
 app = FastAPI(title="SomaliGuard ML Engine (Fraud + Reasons)")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=[
+        "http://localhost:3000",
+        "https://somaliaguard-web-app.onrender.com"  # 🧠 Added your live production web domain!
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
